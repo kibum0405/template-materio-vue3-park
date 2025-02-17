@@ -1,6 +1,6 @@
 forEach: Model
 fileName: index.js
-path: for-model/frontend-materio/src/router
+path: for-model/frontend/src/router
 ---
 import { createRouter, createWebHashHistory } from 'vue-router';
 
