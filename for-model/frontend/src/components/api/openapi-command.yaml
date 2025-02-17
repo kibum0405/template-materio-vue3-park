@@ -1,0 +1,120 @@
+forEach: Command
+fileName: {{aggregate.nameCamelCase}}-openapi.yaml
+except: {{contexts.except}}
+ifDuplicated: merge
+---
+paths:
+  /{{aggregate.namePlural}}/{id}/{{controllerInfo.apiPath}}:
+    summary: {{name}} operation on {{aggregate.namePlural}}
+    {{url controllerInfo.method}}:
+      requestBody:
+        content:
+          application/json:
+            schema:      # Request body contents
+              type: object
+              properties:
+              {{#fieldDescriptors}}
+                {{name}}:
+                  description: {{name}} of this {{../namePascalCase}}
+                  type: {{map @root.contexts.mappings className}}
+              {{/fieldDescriptors}}
+            examples:
+            {{#examples}}
+              Example {{@index}}:   
+            {{#when}}
+                value:
+                {{#each value}}
+                  {{@key}}: {{this}}
+                {{/each}}
+            {{/when}}
+            {{/examples}}      
+      parameters:
+      - name: id
+        description: {{namePascalCase}} name
+        schema:
+          type: {{map @root.contexts.mappings aggregate.aggregateRoot.keyFieldDescriptor.className}}
+        in: path
+        required: true
+        examples:
+        {{#examples}}
+          Example {{@index}}:   
+        {{#when}}
+            value:
+              {{#value}}
+              {{#jp @root.contexts.jsonPathForId}}
+                {{this}}
+              {{/jp}}
+              {{/value}}
+              
+        {{/when}}
+        {{/examples}}      
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/{{aggregate.namePascalCase}}'
+              examples:
+              {{#examples}}
+                Example {{@index}}: 
+              {{#then}}
+                  value:
+                  {{#each value}}
+                    {{@key}}: {{this}}
+                  {{/each}}
+              {{/then}}
+              {{/examples}}      
+              {{^examples}}
+                1:
+                  value:
+                  {{#aggregate.aggregateRoot.fieldDescriptors}}
+                    {{name}}: {{map @root.contexts.examples className}}
+                  {{/aggregate.aggregateRoot.fieldDescriptors}}
+              {{/examples}}
+          description: {{namePascalCase}} Operation
+      operationId: {{namePascalCase}}
+      summary: {{namePascalCase}}
+      description: {{namePascalCase}}
+
+<function>
+ 
+ 
+    this.contexts.jsonPathForId = "$." + this.aggregate.aggregateRoot.keyFieldDescriptor.name
+  
+    this.contexts.mappings = [
+      {
+        "if":['Double', 'double', 'BigDecimal', 'float'],
+        "then":'number'
+      },
+      {
+        "if":['Integer', 'integer', 'Long', 'long'],
+        "then": 'integer'
+      },
+      {
+        "if":['String'],
+        "then": 'string'
+      },
+      {
+        "default": 'string'
+      }
+    ]
+
+    this.contexts.examples = [
+      {
+        "if":['Double', 'double', 'BigDecimal', 'float'],
+        "then":1.1
+      },
+      {
+        "if":['Integer', 'integer', 'Long', 'long'],
+        "then": 1
+      },
+      {
+        "if":['String'],
+        "then": 'A string'
+      },
+      {
+        "default": 'value'
+      }
+    ]
+
+</function>
