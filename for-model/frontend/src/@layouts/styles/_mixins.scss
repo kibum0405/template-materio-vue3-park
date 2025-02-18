@@ -10,19 +10,15 @@
 }
 
 @mixin boxed-content($nest-selector: false) {
-  & {
-    @extend %boxed-content-spacing;
-
     @at-root {
-      @if $nest-selector == false {
-        .layout-content-width-boxed#{&} {
-          @extend %boxed-content;
+        @if $nest-selector == false {
+            .layout-content-width-boxed#{&} {
+                @extend %boxed-content;
+            }
+        } @else {
+            .layout-content-width-boxed & {
+                @extend %boxed-content;
+            }
         }
-      } @else {
-        .layout-content-width-boxed & {
-          @extend %boxed-content;
-        }
-      }
     }
-  }
 }

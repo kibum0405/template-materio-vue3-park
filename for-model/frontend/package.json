@@ -25,7 +25,7 @@
         "partial-json-parser": "^1.2.2",
         "pinia": "^2.0.22",
         "prismjs": "^1.29.0",
-        "sass": "^1.54.9",
+        "sass": "^1.85.0",
         "unplugin-vue-define-options": "^0.6.2",
         "v-calendar": "^3.1.2",
         "vue": "^3.2.37",
