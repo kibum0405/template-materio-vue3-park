@@ -16,10 +16,18 @@ import {
         <VerticalNavLink
             :item="{
                 title: '{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}',
-                to: '/{{namePlural}}',
+                to: '/{{boundedContext.namePlural}}/{{namePlural}}',
             }"
         />
     {{/aggregates}}
+    {{#views}}
+        <VerticalNavLink
+            :item="{
+                title: '{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}',
+                to: '/{{boundedContext.namePlural}}/{{namePlural}}',
+            }"
+        />
+    {{/views}}
 {{/boundedContexts}}
     </ul>
 </template>

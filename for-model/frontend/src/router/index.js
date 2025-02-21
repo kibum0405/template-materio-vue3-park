@@ -14,14 +14,14 @@ const router = createRouter({
 {{#boundedContexts}}
   {{#aggregates}}
     {
-      path: '/{{namePlural}}',
+      path: '/{{boundedContext.namePlural}}/{{namePlural}}',
       component: () => import('../components/ui/{{namePascalCase}}Grid.vue'),
     },
   {{/aggregates}}
   {{#views}}
     {{#ifEquals dataProjection "cqrs"}}
     {
-      path: '/{{namePlural}}',
+      path: '/{{boundedContext.namePlural}}/{{namePlural}}',
       component: () => import('../components/{{namePascalCase}}View.vue'),
     },
     {{/ifEquals}}

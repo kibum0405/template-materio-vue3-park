@@ -85,7 +85,10 @@ fileName: {{namePascalCase}}Grid.vue
                             </td>
                             {{/target}}
                             {{/outgoingRelations}}
-                            <Icon style="margin-top: 15px;" icon="mi:delete" @click="deleteRow(val)" />
+                            <v-row class="ma-0 pa-4 align-center">
+                                <v-spacer></v-spacer>
+                                <Icon style="cursor: pointer;" icon="mi:delete" @click="deleteRow(val)" />
+                            </v-row>
                         </tr>
                     </tbody>
                 </v-table>

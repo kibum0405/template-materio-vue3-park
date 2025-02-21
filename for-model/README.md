@@ -3,10 +3,22 @@
 ## Model
 www.msaez.io/{{URL}}
 
+## frontend
+node -v : 18.17.0
+npm -v : 9.9.4
+
+
+```
+cd front
+npm install
+npm run dev
+```
+
+
 ## Before Running Services
 ### Make sure there is a Kafka server running
 ```
-cd kafka
+cd infra
 docker-compose up
 ```
 - Check the Kafka messages:
