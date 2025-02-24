@@ -18,14 +18,20 @@ fileName: {{namePascalCase}}Grid.vue
                 <v-btn @click="addNewRow" @class="contrast-primary-text" small color="primary">
                     <v-icon small style="margin-left: -5px;">mdi-plus</v-icon>등록
                 </v-btn>
-                <v-btn style="margin-left: 5px;" @click="openEditDialog()" class="contrast-primary-text" small color="primary">
+                <v-btn :disable="!selectedRow" style="margin-left: 5px;" @click="openEditDialog()" class="contrast-primary-text" small color="primary">
                     <v-icon small>mdi-pencil</v-icon>수정
                 </v-btn>
                 {{#commands}}
                 {{^isRestRepository}}
+                {{#if (isCommandMethod controllerInfo "POST")}}
                 <v-btn style="margin-left: 5px;" {{#if fieldDescriptors}}@click="{{nameCamelCase}}Dialog = true"{{else}}@click="{{nameCamelCase}}"{{/if}} class="contrast-primary-text" small color="primary" {{#if (attachedActorName actorName)}}:disabled="!hasRole('{{actorName}}')"{{/if}}>
                     <v-icon small>mdi-minus-circle-outline</v-icon>{{#ifNotNull displayName name}}{{/ifNotNull}}
                 </v-btn>
+                {{ else }}
+                <v-btn :disable="!selectedRow" style="margin-left: 5px;" {{#if fieldDescriptors}}@click="{{nameCamelCase}}Dialog = true"{{else}}@click="{{nameCamelCase}}"{{/if}} class="contrast-primary-text" small color="primary" {{#if (attachedActorName actorName)}}:disabled="!hasRole('{{actorName}}')"{{/if}}>
+                    <v-icon small>mdi-minus-circle-outline</v-icon>{{#ifNotNull displayName name}}{{/ifNotNull}}
+                </v-btn>
+                {{/if}}
                 {{#if fieldDescriptors}}
                 <v-dialog v-model="{{nameCamelCase}}Dialog" width="500">
                     <{{namePascalCase}}
@@ -61,7 +67,11 @@ fileName: {{namePascalCase}}Grid.vue
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(val, idx) in value" :key="val" @click="changeSelectedRow(val)" :style="val === selectedRow ? 'background-color: #f0f3ff;':''">
+                        <tr v-for="(val, idx) in value" 
+                            @click="changeSelectedRow(val)"
+                            :key="val"  
+                            :style="val === selectedRow ? 'background-color: rgb(var(--v-theme-primary), 0.2) !important;':''"
+                        >
                             <td class="font-semibold">\{{ idx + 1 }}</td>
                             {{#aggregateRoot.fieldDescriptors}}
                             {{#unless isKey}}
@@ -300,6 +310,14 @@ if (me && me.attached) {
         }
     }
 }
+
+window.$HandleBars.registerHelper('isCommandMethod', function(controllerInfo, ...methods) {
+    if (!controllerInfo || !controllerInfo.method) {
+        return false;
+    }
+    return methods.includes(controllerInfo.method);
+});
+
 window.$HandleBars.registerHelper('getPickerName', function (fieldDescriptors) {
     for(var i = 0; i < fieldDescriptors.length; i ++ ){
         if(fieldDescriptors[i] && fieldDescriptors[i].isName == true){
