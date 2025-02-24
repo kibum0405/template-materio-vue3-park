@@ -244,8 +244,14 @@ export default {
         {{^isRestRepository}}
         {{nameCamelCase}}({{#if fieldDescriptors}}params{{/if}}){
             try{
-                this.repository.invoke(this.getSelectedItem(), "{{nameCamelCase}}", {{#if fieldDescriptors}}params{{else}}null{{/if}})
-                this.$EventBus.$emit('show-success','{{#ifNotNull displayname name}}{{/ifNotNull}} 성공적으로 처리되었습니다.')
+                this.repository.invoke(this.getSelectedRow, "{{nameCamelCase}}", {{#if fieldDescriptors}}params{{else}}null{{/if}})
+                // 스넥바 관련 수정 필요
+                // this.$EventBus.$emit('show-success','{{#ifNotNull displayname name}}{{/ifNotNull}} 성공적으로 처리되었습니다.')
+                for(var i = 0; i< this.value.length; i++){
+                    if(this.value[i] == this.selectedRow){
+                        this.value[i] = temp.data
+                    }
+                }
                 {{#if fieldDescriptors}}
                 this.{{nameCamelCase}}Dialog = false
                 {{/if}}
