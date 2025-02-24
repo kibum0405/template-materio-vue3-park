@@ -6,8 +6,24 @@ fileName: {{namePascalCase}}.vue
         {{#aggregateRoot.fieldDescriptors}}
         {{#if (isNotId nameCamelCase)}}
         {{#if (isPrimitive className)}}
-        <{{getPrimitiveType className}} label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}" v-model="value.{{nameCamelCase}}" :editMode="editMode"/>
+        {{#if isList}}
+        <v-divider class="border-opacity-50 my-divider my-2"></v-divider>
+        <div variant="outlined" class="my-2">
+            <{{getPrimitiveType className}} label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}" v-model="{{nameCamelCase}}Input" :editMode="editMode" @keydown.enter="add{{namePascalCase}}List"/>
+            <v-card v-if="value.{{nameCamelCase}}.length > 0" variant="outlined" class="pa-4 mt-2">
+                <v-card-sub-title>{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}} List</v-card-sub-title>
+                <li v-for="(name, index) in value.{{nameCamelCase}}" :key="index">\{{ name }}</li>
+            </v-card>
+            <v-row class="ma-0 pa-0 mt-2">
+                <v-spacer></v-spacer>
+                <v-btn @click="add{{namePascalCase}}List">{{namePascalCase}} 추가</v-btn>
+            </v-row>
+            <{{getEntityFromList className}}DetailGrid label="{{namePascalCase}}" offline v-model="value.{{nameCamelCase}}" :editMode="editMode" @change="change"/>
+        </div>
+        <v-divider class="border-opacity-50 my-divider my-2"></v-divider>
         {{else}}
+        <{{getPrimitiveType className}} label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}" v-model="value.{{nameCamelCase}}" :editMode="editMode"/>
+        {{/if}}
         {{/if}}
         {{/if}}
         {{/aggregateRoot.fieldDescriptors}}
@@ -37,14 +53,9 @@ fileName: {{namePascalCase}}.vue
         {{/if}}
         {{/if}}
         {{/aggregateRoot.fieldDescriptors}}
-        {{#aggregateRoot.fieldDescriptors}}
-        {{#if isList}}
-        <{{getEntityFromList className}}DetailGrid label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}" offline v-model="value.{{nameCamelCase}}" :editMode="editMode" @change="change"/>
-        {{/if}}
-        {{/aggregateRoot.fieldDescriptors}}
-
-        <v-divider class="border-opacity-100 my-divider"></v-divider>
-        <v-layout row justify-end>
+        <v-divider class="border-opacity-50 my-divider my-2"></v-divider>
+        <v-row class="ma-0 pa-0">
+            <v-spacer></v-spacer>
             <v-btn
                 width="64px"
                 color="primary"
@@ -52,7 +63,7 @@ fileName: {{namePascalCase}}.vue
             >
                 저장
             </v-btn>
-        </v-layout>
+        </v-row>
     </div>
 </template>
 
@@ -68,13 +79,35 @@ export default {
     },
     
     data: () => ({
-        path: "{{namePlural}}"
+        path: "{{namePlural}}",
+        {{#aggregateRoot.fieldDescriptors}}
+        {{#if isList}}
+        {{nameCamelCase}}Input: '',
+        {{/if}}
+        {{/aggregateRoot.fieldDescriptors}}
+        value: {
+            {{#aggregateRoot.fieldDescriptors}}
+            {{#if isList}}
+            {{nameCamelCase}}: [],
+            {{/if}}
+            {{/aggregateRoot.fieldDescriptors}}
+        }
     }),
     created(){
     },
     computed:{
     },
     methods: {
+        {{#aggregateRoot.fieldDescriptors}}
+        {{#if isList}}
+        add{{namePascalCase}}List() {
+            if (this.{{nameCamelCase}}Input.trim() !== '') {
+                this.value.{{nameCamelCase}}.push(this.{{nameCamelCase}}Input.trim());
+                this.{{nameCamelCase}}Input = '';
+            }
+        },
+        {{/if}}
+        {{/aggregateRoot.fieldDescriptors}}
     },
 }
 </script>
