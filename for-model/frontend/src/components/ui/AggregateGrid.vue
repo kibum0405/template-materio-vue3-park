@@ -73,7 +73,15 @@ fileName: {{namePascalCase}}Grid.vue
                             </td>
                             {{/checkVO}}
                             {{else}}
+                            {{#if isList}}
+                            <td class="whitespace-nowrap" label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}">
+                                <span v-for="(name, index) in val.{{nameCamelCase}}" :key="index">
+                                    \{{ name }}<br>
+                                </span>
+                            </td>
+                            {{ else }}
                             <td class="whitespace-nowrap" label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}">{{#getTableData nameCamelCase}}{{/getTableData}}</td>
+                            {{/if}}
                             {{/if}}
                             {{/if}}
                             {{/unless}}
@@ -108,7 +116,7 @@ fileName: {{namePascalCase}}Grid.vue
                 <v-card>
                     <v-toolbar
                         color="primary"
-                        class="elevation-0"
+                        class="elevation-0 pa-4"
                         height="50px"
                     >
                         <div style="color:white; font-size:17px; font-weight:700;">{{namePascalCase}} 등록</div>
@@ -138,7 +146,7 @@ fileName: {{namePascalCase}}Grid.vue
                 <v-card>
                     <v-toolbar
                         color="primary"
-                        class="elevation-0"
+                        class="elevation-0 pa-4"
                         height="50px"
                     >
                         <div style="color:white; font-size:17px; font-weight:700;">{{namePascalCase}} 수정</div>
