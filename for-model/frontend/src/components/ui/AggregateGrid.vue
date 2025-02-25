@@ -18,7 +18,7 @@ fileName: {{namePascalCase}}Grid.vue
                 <v-btn @click="addNewRow" @class="contrast-primary-text" small color="primary">
                     <v-icon small style="margin-left: -5px;">mdi-plus</v-icon>등록
                 </v-btn>
-                <v-btn :disable="!selectedRow" style="margin-left: 5px;" @click="openEditDialog()" class="contrast-primary-text" small color="primary">
+                <v-btn :disabled="!selectedRow" style="margin-left: 5px;" @click="openEditDialog()" class="contrast-primary-text" small color="primary">
                     <v-icon small>mdi-pencil</v-icon>수정
                 </v-btn>
                 {{#commands}}
@@ -28,7 +28,7 @@ fileName: {{namePascalCase}}Grid.vue
                     <v-icon small>mdi-minus-circle-outline</v-icon>{{#ifNotNull displayName name}}{{/ifNotNull}}
                 </v-btn>
                 {{ else }}
-                <v-btn :disable="!selectedRow" style="margin-left: 5px;" {{#if fieldDescriptors}}@click="{{nameCamelCase}}Dialog = true"{{else}}@click="{{nameCamelCase}}"{{/if}} class="contrast-primary-text" small color="primary" {{#if (attachedActorName actorName)}}:disabled="!hasRole('{{actorName}}')"{{/if}}>
+                <v-btn :disabled="!selectedRow" style="margin-left: 5px;" {{#if fieldDescriptors}}@click="{{nameCamelCase}}Dialog = true"{{else}}@click="{{nameCamelCase}}"{{/if}} class="contrast-primary-text" small color="primary" {{#if (attachedActorName actorName)}}:disabled="!hasRole('{{actorName}}')"{{/if}}>
                     <v-icon small>mdi-minus-circle-outline</v-icon>{{#ifNotNull displayName name}}{{/ifNotNull}}
                 </v-btn>
                 {{/if}}
