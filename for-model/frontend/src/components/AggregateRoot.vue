@@ -53,7 +53,6 @@ fileName: {{namePascalCase}}.vue
         {{/if}}
         {{/if}}
         {{/aggregateRoot.fieldDescriptors}}
-        <v-divider class="border-opacity-50 my-divider my-2"></v-divider>
         <v-row class="ma-0 pa-0">
             <v-spacer></v-spacer>
             <v-btn
@@ -69,7 +68,6 @@ fileName: {{namePascalCase}}.vue
 
 
 <script>
-
 import BaseEntity from './base-ui/BaseEntity.vue'
 
 export default {
@@ -82,7 +80,7 @@ export default {
         path: "{{namePlural}}",
         {{#aggregateRoot.fieldDescriptors}}
         {{#if isList}}
-        {{nameCamelCase}}Input: '',
+        {{nameCamelCase}}Input: null,
         {{/if}}
         {{/aggregateRoot.fieldDescriptors}}
         value: {
@@ -101,9 +99,9 @@ export default {
         {{#aggregateRoot.fieldDescriptors}}
         {{#if isList}}
         add{{namePascalCase}}List() {
-            if (this.{{nameCamelCase}}Input.trim() !== '') {
-                this.value.{{nameCamelCase}}.push(this.{{nameCamelCase}}Input.trim());
-                this.{{nameCamelCase}}Input = '';
+            if (this.{{nameCamelCase}}Input !== null && this.{{nameCamelCase}}Input !== '') {
+                this.value.{{nameCamelCase}}.push(this.{{nameCamelCase}}Input);
+                this.{{nameCamelCase}}Input = null; // null로 초기화
             }
         },
         {{/if}}
