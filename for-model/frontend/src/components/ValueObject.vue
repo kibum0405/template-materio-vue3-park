@@ -62,10 +62,19 @@ export default {
             this.change();
         },
     },
-    async created(){
-        this.value = this.modelValue
-        if (this.value && this.value.id !== undefined) {
-            this.value = await this.repository.findById(this.value.id)
+    async created() {
+        if (Array.isArray(this.modelValue)) {
+            this.value = await Promise.all(this.modelValue.map(async (item) => {
+                if (item && item.id !== undefined) {
+                    return await this.repository.findById(item.id);
+                }
+                return item;
+            }));
+        } else {
+            this.value = this.modelValue;
+            if (this.value && this.value.id !== undefined) {
+                this.value = await this.repository.findById(this.value.id);
+            }
         }
     },
     methods: {
