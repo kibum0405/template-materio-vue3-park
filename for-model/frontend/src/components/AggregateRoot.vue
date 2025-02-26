@@ -9,20 +9,75 @@ fileName: {{namePascalCase}}.vue
         {{#if isList}}
         <v-divider class="border-opacity-50 my-divider my-2"></v-divider>
         <div variant="outlined" class="my-2">
-            <{{getPrimitiveType className}} label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}" v-model="{{nameCamelCase}}Input" :editMode="editMode" @keydown.enter="add{{namePascalCase}}List"/>
+            <{{getPrimitiveType className}}
+                label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}"
+                v-model="{{nameCamelCase}}Input"
+                :editMode="editMode"
+                @keydown.enter="add{{namePascalCase}}List"
+            />
             <v-card v-if="value.{{nameCamelCase}}.length > 0" variant="outlined" class="pa-4 mt-2">
-                <v-card-sub-title>{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}} List</v-card-sub-title>
-                <li v-for="(name, index) in value.{{nameCamelCase}}" :key="index">\{{ name }}</li>
+                <v-card-sub-title>
+                    {{#ifNotNull displayName namePascalCase}}{{/ifNotNull}} List
+                </v-card-sub-title>
+                <li v-for="(name, index) in value.{{nameCamelCase}}" :key="index">
+                    \{{ name }}
+                </li>
             </v-card>
             <v-row class="ma-0 pa-0 mt-2">
                 <v-spacer></v-spacer>
-                <v-btn @click="add{{namePascalCase}}List">{{namePascalCase}} 추가</v-btn>
+                <v-btn @click="add{{namePascalCase}}List">
+                    {{namePascalCase}} 추가
+                </v-btn>
             </v-row>
-            <{{getEntityFromList className}}DetailGrid label="{{namePascalCase}}" offline v-model="value.{{nameCamelCase}}" :editMode="editMode" @change="change"/>
+            
+            <{{getEntityFromList className}}DetailGrid
+                label="{{namePascalCase}}"
+                offline
+                v-model="value.{{nameCamelCase}}"
+                :editMode="editMode"
+                @change="change"
+            />
         </div>
         <v-divider class="border-opacity-50 my-divider my-2"></v-divider>
         {{else}}
-        <{{getPrimitiveType className}} label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}" v-model="value.{{nameCamelCase}}" :editMode="editMode"/>
+        <{{getPrimitiveType className}}
+            label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}"
+            v-model="value.{{nameCamelCase}}"
+            :editMode="editMode"
+        />
+        {{/if}}
+        {{else}}
+        {{#if isList}}
+        {{#if (getPrimitiveType className)}}
+        <{{getPrimitiveType className}}
+            offline
+            label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}"
+            v-model="value.{{nameCamelCase}}"
+            :editMode="editMode"
+            @change="change"
+        />
+        {{else}}
+        <div variant="outlined" class="my-2">
+            <{{namePascalCase}} v-model="{{nameCamelCase}}Input"
+                offline
+                label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}"
+                :editMode="editMode"
+                @change="change"
+            />
+            <v-row class="ma-0 pa-0 mt-2">
+                <v-spacer></v-spacer>
+                <v-btn @click="add{{namePascalCase}}List">{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}} Add</v-btn>
+            </v-row>
+            <v-card v-if="value.{{nameCamelCase}}.length > 0" variant="outlined" class="pa-4 mt-2">
+                <v-card-sub-title>
+                    {{#ifNotNull displayName namePascalCase}}{{/ifNotNull}} List
+                </v-card-sub-title>
+                <li v-for="(id, index) in value.{{nameCamelCase}}" :key="index">
+                    \{{ id && id.{{#../boundedContext.aggregates}}{{#outgoingRelations}}{{#target}}{{#attached 'BoundedContext' this}}{{#getRefaggField aggregates ../../../../../aggregateRoot}}{{/getRefaggField}}{{#aggregates}}{{#if (compareName name ../../../../../../aggregateRoot.fieldDescriptors)}}{{#getNameField aggregateRoot.fieldDescriptors}}{{/getNameField}}{{/if}}{{/aggregates}}{{/attached}}{{/target}}{{/outgoingRelations}}{{/../boundedContext.aggregates}} ? id.{{#../boundedContext.aggregates}}{{#outgoingRelations}}{{#target}}{{#attached 'BoundedContext' this}}{{#aggregates}}{{#getNameField aggregateRoot.fieldDescriptors}}{{/getNameField}}{{/aggregates}}{{/attached}}{{/target}}{{/outgoingRelations}}{{/../boundedContext.aggregates}} : '' }}
+                </li>
+            </v-card>
+        </div>
+        {{/if}}
         {{/if}}
         {{/if}}
         {{/if}}
@@ -32,7 +87,13 @@ fileName: {{namePascalCase}}.vue
         {{#if (isNotId nameCamelCase)}}
         {{#if isVO}}
         {{#checkVO className}}
-        <{{className}} offline label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}" v-model="value.{{nameCamelCase}}" :editMode="editMode" @change="change"/>
+        <{{className}}
+            offline
+            label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}"
+            v-model="value.{{nameCamelCase}}"
+            :editMode="editMode"
+            @change="change"
+        />
         {{/checkVO}}
         {{/if}}
         {{/if}}
@@ -44,9 +105,21 @@ fileName: {{namePascalCase}}.vue
         {{else}}
         {{#checkEntityMember className}}
         {{#if (getPrimitiveType className)}}
-        <{{getPrimitiveType className}} offline label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}" v-model="value.{{nameCamelCase}}" :editMode="editMode" @change="change"/>
+        <{{getPrimitiveType className}}
+            offline
+            label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}"
+            v-model="value.{{nameCamelCase}}"
+            :editMode="editMode"
+            @change="change"
+        />
         {{else}}
-        <{{className}} offline label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}" v-model="value.{{nameCamelCase}}" :editMode="editMode" @change="change"/>
+        <{{className}}
+            offline
+            label="{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}"
+            v-model="value.{{nameCamelCase}}"
+            :editMode="editMode"
+            @change="change"
+        />
         {{/if}}
         {{/checkEntityMember}}
         {{/if}}
@@ -55,11 +128,7 @@ fileName: {{namePascalCase}}.vue
         {{/aggregateRoot.fieldDescriptors}}
         <v-row class="ma-0 pa-0">
             <v-spacer></v-spacer>
-            <v-btn
-                width="64px"
-                color="primary"
-                @click="save"
-            >
+            <v-btn width="64px" color="primary" @click="save">
                 저장
             </v-btn>
         </v-row>
@@ -326,7 +395,28 @@ export default {
         } catch(e) {
             console.log(e)
         }
-    })
+    });
+
+    window.$HandleBars.registerHelper('compareName', function (aggName, fieldDescriptors) {
+        for(var i = 0; i < fieldDescriptors.length; i ++ ) {
+            if(fieldDescriptors[i].referenceClass && aggName == fieldDescriptors[i].referenceClass){
+                return true;
+            }
+        } 
+        return false;
+    });
+    
+    window.$HandleBars.registerHelper('getNameField', function (fieldDescriptors) {
+        for(var i = 0; i < fieldDescriptors.length; i ++ ){
+            if(fieldDescriptors[i] && fieldDescriptors[i].isName == true){
+                console.log('fieldDescriptors[i].nameCamelCase : ture', fieldDescriptors[i].nameCamelCase)
+                return fieldDescriptors[i].nameCamelCase
+            }else if(fieldDescriptors[i].isName == false && fieldDescriptors[i].isKey == false){
+                console.log('fieldDescriptors[i].nameCamelCase : false', fieldDescriptors[i].nameCamelCase)
+                return fieldDescriptors[i].nameCamelCase
+            }
+        }
+    });
 
     window.$HandleBars.registerHelper('toURL', function (className) {
 
