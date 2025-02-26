@@ -73,7 +73,7 @@ fileName: {{namePascalCase}}.vue
                     {{#ifNotNull displayName namePascalCase}}{{/ifNotNull}} List
                 </v-card-sub-title>
                 <li v-for="(id, index) in value.{{nameCamelCase}}" :key="index">
-                    \{{ id && id.{{#../boundedContext.aggregates}}{{#outgoingRelations}}{{#target}}{{#attached 'BoundedContext' this}}{{#getRefaggField aggregates ../../../../../aggregateRoot}}{{/getRefaggField}}{{#aggregates}}{{#if (compareName name ../../../../../../aggregateRoot.fieldDescriptors)}}{{#getNameField aggregateRoot.fieldDescriptors}}{{/getNameField}}{{/if}}{{/aggregates}}{{/attached}}{{/target}}{{/outgoingRelations}}{{/../boundedContext.aggregates}} ? id.{{#../boundedContext.aggregates}}{{#outgoingRelations}}{{#target}}{{#attached 'BoundedContext' this}}{{#aggregates}}{{#getNameField aggregateRoot.fieldDescriptors}}{{/getNameField}}{{/aggregates}}{{/attached}}{{/target}}{{/outgoingRelations}}{{/../boundedContext.aggregates}} : '' }}
+                    \{{ id && id.{{#../boundedContext.aggregates}}{{#outgoingRelations}}{{#target}}{{#attached 'BoundedContext' this}}{{#aggregates}}{{#if (compareName name ../../../../../../aggregateRoot.fieldDescriptors)}}{{#getNameField aggregateRoot.fieldDescriptors}}{{/getNameField}}{{/if}}{{/aggregates}}{{/attached}}{{/target}}{{/outgoingRelations}}{{/../boundedContext.aggregates}} ? id.{{#../boundedContext.aggregates}}{{#outgoingRelations}}{{#target}}{{#attached 'BoundedContext' this}}{{#aggregates}}{{#getNameField aggregateRoot.fieldDescriptors}}{{/getNameField}}{{/aggregates}}{{/attached}}{{/target}}{{/outgoingRelations}}{{/../boundedContext.aggregates}} : '' }}
                 </li>
             </v-card>
         </div>
