@@ -1,5 +1,6 @@
 forEach: ValueObject
 fileName: {{namePascalCase}}.vue
+except: {{#checkDefaultVO namePascalCase}}{{/checkDefaultVO}}
 ---
 <template>
     {{#referenceClass}}
@@ -103,6 +104,15 @@ export default {
             me.contexts.views.push(view);
         }
     })
+
+    window.$HandleBars.registerHelper('checkDefaultVO', function (name) {
+        if(name == 'Address' || name == 'Photo' || name == 'Email' || name == 'EventViewer' || name == 'File' || name == 'Money' || name == 'Payment' || name == 'Rating' || name == 'User' || name == 'Weather') {
+            return true;
+        } else {
+            return false;
+        }
+    })
+
     window.$HandleBars.registerHelper('compareName', function (aggName, referenceName) {
         if(aggName == referenceName){
             return true;
