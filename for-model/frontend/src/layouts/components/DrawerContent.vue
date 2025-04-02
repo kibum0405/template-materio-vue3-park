@@ -16,7 +16,7 @@ import {
         <VerticalNavLink
             :item="{
                 title: '{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}',
-                to: '/{{boundedContext.namePlural}}/{{namePlural}}',
+                to: '/{{namePlural}}',
             }"
         />
     {{/aggregates}}
@@ -24,7 +24,7 @@ import {
         <VerticalNavLink
             :item="{
                 title: '{{#ifNotNull displayName namePascalCase}}{{/ifNotNull}}',
-                to: '/{{boundedContext.namePlural}}/{{namePlural}}',
+                to: '/{{namePlural}}',
             }"
         />
     {{/views}}
