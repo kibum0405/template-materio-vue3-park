@@ -1,5 +1,6 @@
 forEach: ValueObject
 fileName: {{namePascalCase}}DetailGrid.vue
+except: {{#checkDefaultVO namePascalCase referenceClass}}{{/checkDefaultVO}}
 ---
 <template>
     <div class="panel">
@@ -118,6 +119,14 @@ export default {
 <function>
     var importList = []
     var componentList = []
+
+    window.$HandleBars.registerHelper('checkDefaultVO', function (name, isReference) {
+        if(name == 'Address' || name == 'Photo' || name == 'Email' || name == 'EventViewer' || name == 'File' || name == 'Money' || name == 'Payment' || name == 'Rating' || name == 'User' || name == 'Weather' || isReference) {
+            return true;
+        } else {
+            return false;
+        }
+    })
 
     window.$HandleBars.registerHelper('ifNotNull', function (displayName, name) {
         if(displayName){
