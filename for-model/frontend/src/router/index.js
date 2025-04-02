@@ -13,10 +13,12 @@ const router = createRouter({
     },
 {{#boundedContexts}}
   {{#aggregates}}
+  {{#if nane}}
     {
       path: '/{{boundedContext.namePlural}}/{{namePlural}}',
       component: () => import('../components/ui/{{namePascalCase}}Grid.vue'),
     },
+  {{/if}}
   {{/aggregates}}
   {{#views}}
     {{#ifEquals dataProjection "cqrs"}}
