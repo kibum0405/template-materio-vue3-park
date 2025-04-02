@@ -13,7 +13,7 @@ const router = createRouter({
     },
 {{#boundedContexts}}
   {{#aggregates}}
-  {{#if nane}}
+  {{#if name}}
     {
       path: '/{{boundedContext.namePlural}}/{{namePlural}}',
       component: () => import('../components/ui/{{namePascalCase}}Grid.vue'),
