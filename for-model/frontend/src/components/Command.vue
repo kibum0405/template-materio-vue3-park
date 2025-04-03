@@ -1,5 +1,6 @@
 forEach: Command
 fileName: {{pascalCase name}}.vue
+except: {{#checkCommand isRestRepository}}{{/checkCommand}}
 ---
 <template>
 
@@ -84,6 +85,14 @@ export default {
 <function>
     var importList = []
     var componentList = []
+
+    window.$HandleBars.registerHelper('checkCommand', function (isRestRepository) {
+        if(isRestRepository){
+            return true;
+        } else {
+            return false;
+        }
+    });
 
     window.$HandleBars.registerHelper('print', function (value) {
         console.log(value)
