@@ -57,7 +57,7 @@ except: {{#ifEquals dataProjection "query-for-aggregate"}}false{{else}}true{{/if
         data: () => ({
             editMode: true,
             value: {
-                apiPath: '{{#attached 'Aggregate' this}}{{namePlural}}{{/attached}}/search/findBy{{namePascalCase}}',
+                apiPath: '{{#attached 'Aggregate' this}}{{namePlural}}{{/attached}}/search/{{nameCamelCase}}',
                 parameters: {}
             },
         }),

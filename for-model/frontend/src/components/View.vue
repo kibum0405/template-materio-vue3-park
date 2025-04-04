@@ -1,5 +1,6 @@
 forEach: View
 fileName: {{namePascalCase}}View.vue
+except: {{#checkViewType dataProjection}}{{/checkViewType}}
 ---
 <template>
     <v-data-table
@@ -13,9 +14,13 @@ fileName: {{namePascalCase}}View.vue
 <script>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { VDataTable } from 'vuetify/labs/VDataTable'
 
 export default {
     name: '{{namePascalCase}}View',
+    components: {
+        VDataTable,
+    },
     props: {
         value: Object,
         editMode: Boolean,
@@ -25,7 +30,7 @@ export default {
         const headers = ref([
             // 필드 디스크립터를 기반으로 헤더 설정
             {{#fieldDescriptors}}
-            { text: "{{nameCamelCase}}", value: "{{nameCamelCase}}" },
+            { title: "{{nameCamelCase}}", key: "{{nameCamelCase}}" },
             {{/fieldDescriptors}}
         ]);
 
@@ -51,3 +56,13 @@ export default {
     }
 }
 </script>
+
+<function>
+    window.$HandleBars.registerHelper('checkViewType', function (dataProjection) {
+        if(dataProjection == 'cqrs'){
+            return false;
+        } else {
+            return true;
+        }
+    })
+</function>
